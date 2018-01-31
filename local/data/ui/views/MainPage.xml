@@ -1,0 +1,64 @@
+<view autoCancelInterval="90" isVisible="true" onunloadCancelJobs="true" template="dashboard.html"  isSticky="False">
+
+    <label>Home</label>
+    <module name="AccountBar" layoutPanel="appHeader" />
+   <module name="SideviewUtils" layoutPanel="appHeader" />
+  <module name="AppBar" layoutPanel="appHeader" />
+ 
+<module name="URLLoader" layoutPanel="viewHeader" autoRun="True">
+    
+ 
+  
+
+
+
+  <module name="HTML" layoutPanel="panel_row1_col1">
+    <param name="html"><![CDATA[
+
+<div class="home">
+      <center>  <H2> INSIGHT SINGAPORE </h2>
+ <img src="/static/app/mysginfo/skyline.jpg"> </a> </center>
+<br/>
+<p>
+  Republic of Singapore, is a Southeast Asian island city-state off the southern tip of the Malay Peninsula, 137 kilometres (85 mi) north of the equator. An island country made up of 63 islands, it is separated from Malaysia by the Straits of Johor to its north and from Indonesia's Riau Islands by the Singapore Strait to its south. The country is highly urbanised with very little primary rainforest remaining, although more land is being created for development through land reclamation.
+
+Today, Singapore has a highly developed market-based economy, based historically on extended entrepôt trade. Along with Hong Kong, South Korea and Taiwan, Singapore is one of the original Four Asian Tigers. The Singaporean economy is known as one of the freest,most innovative, most competitive, and most business-friendly. The 2011 Index of Economic Freedom ranks Singapore as the second freest economy in the world,
+</p>
+
+<p>
+With that, this app is developed to gather most of the commercial information happening within Singapore such as direct entertainment broadcasting, live transportation and traffic updates, internet speed tests and many more. These information are then developed into further visualization means that helps users to get a clear view on the respective area updates.
+Our app have a total of 7 functions. Please browse through our navigation menus to look through the functions in our app.
+</p>
+
+
+  </div>
+    ]]></param>
+  </module>
+
+     <module name="HTML" layoutPanel="panel_row2_col1">
+   <param name="html"><![CDATA[
+
+    <div>
+        <div class="home" style="float:left">
+        <h2>my<u><b>SG</b></u>info is your app!</h2>
+	<p>Is there anything that you find annoying about our app? We'd love to know!</p>
+        <p>To request features, provide feedback, or report issues, send email to <b><a href="mailto:mySGinfo@splunk.com">mySGinfo@splunk.com</a></b>.</p>
+
+	<p>mySGinfo has been developed primarily by the Splunk Support team, with the help of Splunk Dev, Splunk Docs, and <b><a href="http://sideviewapps.com" class="spl-icon-external-link-xsm" target="_blank">Sideview LLC</a></b>.</p>
+        </div>
+        <div style="float:right">
+        <a href="http://www.lta.gov.sg"><img src="/static/app/mysginfo/people.png" alt="mySGinfo"/></a>
+        </div>
+    </div>
+   ]]></param>   
+  </module>
+    
+
+    </module>
+
+    
+
+  
+
+
+</view>

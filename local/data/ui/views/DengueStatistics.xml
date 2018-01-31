@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?><dashboard>
+  <label>Dengue Statistics</label>
+  <row>
+    <single>
+      <title>Dengue Cases in Singapore</title>
+      <searchString>sourcetype="NEADengue" | integratedanalysis chained | chart max(Number of cases) as maxDenguePerDescription by AREA | stats sum(maxDenguePerDescription) as total_dengue_cases | rangemap field=total_dengue_cases low=0-500 elevated=501-1000 default=severe</searchString>
+      <option name="charting.axisTitleX.visibility">visible</option>
+      <option name="charting.axisTitleY.visibility">visible</option>
+      <option name="charting.axisX.scale">linear</option>
+      <option name="charting.axisY.scale">linear</option>
+      <option name="charting.chart">scatter</option>
+      <option name="charting.chart.nullValueMode">gaps</option>
+      <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+      <option name="charting.chart.stackMode">default</option>
+      <option name="charting.chart.style">shiny</option>
+      <option name="charting.drilldown">all</option>
+      <option name="charting.layout.splitSeries">0</option>
+      <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+      <option name="charting.legend.placement">right</option>
+      <option name="linkView">search</option>
+      <option name="underLabel">total_dengue_cases</option>
+    </single>
+  </row>
+  <row>
+    <table>
+      <searchString>sourcetype="NEADengue" | integratedanalysis chained | bin span=1d _time | stats max(Number of cases) as maxDenguePerDescription by _time AREA | timechart span=1d sum(maxDenguePerDescription) by AREA limit=5 useother=f usenull=f| sort -_time limit=7</searchString>
+      <title>Top five dengue cluster</title>
+      <option name="charting.chart.nullValueMode">gaps</option>
+      <option name="charting.chart.stackMode">default</option>
+      <option name="charting.layout.splitSeries">false</option>
+      <option name="charting.legend.placement">right</option>
+      <option name="count">50</option>
+      <option name="dataOverlayMode">heatmap</option>
+      <option name="displayRowNumbers">true</option>
+      <option name="drilldown">none</option>
+      <option name="height">300px</option>
+    </table>
+    <chart>
+      <searchString>sourcetype="NEADengue" | integratedanalysis chained | stats max(Number of cases) as maxDenguePerDescription by DESCRIPTION AREA | stats sum(maxDenguePerDescription) by AREA</searchString>
+      <title>Dengue Cases Overview</title>
+      <option name="charting.axisY2.maximumNumber">760</option>
+      <option name="charting.axisY2.minimumNumber">0</option>
+      <option name="charting.chart">pie</option>
+      <option name="charting.chart.sliceCollapsingThreshold">0</option>
+      <option name="charting.seriesColors">[0x6CB8CA,0xFAC61D,0xD85E3D,0x956E96,
+		0xF7912C,0x9AC23C,0x998C55,0xDD87B0,0x5479AF,0xE0A93B,0x6B8930,0xA04558,
+		0xA7D4DF,0xFCDD77,0xE89E8B,0xBFA8C0,0xFABD80,0xC2DA8A,0xC2BA99,0xEBB7D0,
+		0x98AFCF,0xECCB89,0xA6B883,0xC68F9B,0x416E79,0x967711,0x823825,0x59425A,
+		0x94571A,0x5C7424,0x5C5433,0x85516A,0x324969,0x866523,0x40521D,0x602935]</option>
+      <option name="height">300px</option>
+    </chart>
+  </row>
+  <row>
+    <chart>
+      <searchString>sourcetype="NEADengue" | integratedanalysis chained | bin span=1d _time | stats max(Number of cases) as maxDenguePerDescription by _time DESCRIPTION AREA | timechart span=1d sum(maxDenguePerDescription) by AREA useother=f usenull=f</searchString>
+      <title>Dengue Trend</title>
+      <option name="charting.axisY.maximumNumber">1500</option>
+      <option name="charting.chart">column</option>
+      <option name="charting.chart.stackMode">stacked</option>
+      <option name="charting.legend.placement">right</option>
+    </chart>
+  </row>
+  <row>
+    <chart>
+      <searchString>sourcetype="NEADengue" | integratedanalysis chained | bin span=1d _time | search NOT (AREA="Others" OR AREA="Lakeside") | stats max(Number of cases) as maxDenguePerDescription by _time DESCRIPTION AREA | timechart span=1d sum(maxDenguePerDescription) by AREA useother=f usenull=f</searchString>
+      <title>Dengue Cases Trend</title>
+      <option name="charting.chart">line</option>
+      <option name="charting.chart.nullValueMode">connect</option>
+      <option name="charting.chart.sliceCollapsingThreshold">0</option>
+      <option name="charting.chart.stackMode">default</option>
+      <option name="charting.layout.splitSeries">false</option>
+      <option name="charting.legend.placement">right</option>
+      <option name="charting.primaryAxisTitle.text">Time</option>
+      <option name="charting.secondaryAxisTitle.text">Number of Dengue Cases</option>
+      <option name="height">400px</option>
+    </chart>
+  </row>
+  <row>
+    <chart>
+      <searchString>sourcetype="NEADengue" | integratedanalysis chained | bin span=1d _time | stats max(Number of cases) as maxDenguePerDescription by _time DESCRIPTION AREA  | timechart sum(maxDenguePerDescription) as dengue_cases | predict dengue_cases algorithm=LLT future_timespan=3 | rename prediction(dengue_cases) as future_dengue_cases | eval future_dengue_cases=round(future_dengue_cases,0)</searchString>
+      <title>Dengue Prediction</title>
+      <option name="charting.chart">line</option>
+      <option name="charting.chart.nullValueMode">connect</option>
+      <option name="charting.legend.labels">[dengue_cases,future_dengue_cases,lower95(prediction(dengue_cases)),upper95(prediction(dengue_cases))]</option>
+      <option name="charting.legend.placement">top</option>
+      <option name="charting.seriesColors">[0xFF99FF,0x0000CC,0x00FF00,0x00FF00]</option>
+    </chart>
+  </row>
+</dashboard>

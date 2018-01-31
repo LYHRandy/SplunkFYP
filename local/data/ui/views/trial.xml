@@ -1,0 +1,143 @@
+<view autoCancelInterval="90" isVisible="true" onunloadCancelJobs="true" template="dashboard.html" isSticky="False">
+
+    <label>Home</label>
+    
+  <module name="AccountBar" layoutPanel="appHeader" />
+  <module name="AppBar" layoutPanel="appHeader" />
+  <module name="SideviewUtils" layoutPanel="appHeader" />
+ 
+ <module name="URLLoader" layoutPanel="viewHeader" autoRun="True">
+ 
+
+  <module name="HTML" layoutPanel="viewHeader">
+    <param name="html"><![CDATA[
+    <br>
+    <h1>Welcome to T&C</h1>
+    ]]></param>
+  </module>
+
+  
+
+  <module name="HTML" layoutPanel="panel_row1_col1">
+    <param name="html"><![CDATA[
+<div class="home">
+<center>   <img src="/static/app/TrafficnCarpark/banner.jpg"> </a> </center>
+
+      <H2> What is T&C app all about? </h2>
+<p>Road users are usually updated by the traffic status through technology means such as radio, internet etc. But, do they know what’s causing these congestions? In addition, would you like to know what’s the current car park lots availability figure for each commercial building in the city area? 
+</p>
+<p>Our application does just that. </p>
+<p>One of T&C app’s capabilities is that it lets you get updated on the car park lots figures on a 5 minute real time update. This means that you are able to view the current number of parking lots that’s available. These data are updated every five minutes, so you won’t be viewing the same data every time you run our application. The figures that we are able to provide are mostly from the city area, such as Marina, Harbour front and Orchard Road. Hence, if you are heading to Hotels, Shopping Centres or other commercial buildings, do visit our application beforehand!
+</p>
+<p>Our application’s capability does not stop there. It also provides a platform for you to know what causes the current congestions occurring on the roads of our island. For example, there was a slow moving traffic jam happening on the Paya Lebar flyover and, you are interested to know what happened. Our application is able to display out the cause, such as road works or an accident so that it can help you decide if you need a detour to your destination.
+</p>
+      
+
+  </div>
+    ]]></param>
+  </module>
+
+    <module name="HTML" layoutPanel="panel_row1_col2">
+      <param name="html"><![CDATA[
+  <div class="home">
+   
+ <h1> Application Requirements: </h1>
+<br/> 
+ <h2> Configurations before starting the Application.. </h2>
+<p> Before you could benefit from our application's capabilities, there are few configurations that needs to be done beforehand. These configurations only requires you to key in the necessary credentials and information about yourself. Since our application pulls real life data from Singapore’s Land Transport Authorities, hence you need to provide us with three main inputs before our app can function the way it should. <br/> </p>
+The three inputs are –  <br/><br/>
+<ul>
+<li> Name </li><br/>
+
+<li> Account Key </li><br/>
+
+<li> Unique User ID </li><br/></ul>
+
+<p> These credential inputs will allow the application to run smoothly. The first input is your Name. You can choose any name that you prefer to be recognize as. The second input is the Account Key. This key is the set of characters that you have been provided by LTA upon your request. With the Account key, you can now generate the Unique User ID that will be needed during the configurations later. If you have not requested for the Account Key, you may follow this guide to do so:</p>
+<a href=” http://www.mytransport.sg/content/mytransport/home/dataMall.html”> <u>Guide to possession of Account Key</u> </a><br/>
+
+<p> Once you have gotten a hold of these required fields, please <a href=””> <u>Click here</u> </a> to begin the configurations. </p>
+<br>
+<b> Good Luck! </b> <br/>
+
+
+  </div>
+   ]]></param>   
+  </module>
+
+  <module name="Search" layoutPanel="panel_row1_col1">
+  
+      <module name="Search">
+        <param name="search">
+        | inputlookup splunk_instances_info | search $sos_server$
+        </param>
+        <module name="ResultsValueSetter">
+          <param name="fields">host_fqdn, total_phys_mem_gb, cpu_count, version, build, os_name, cpu_arch, SPLUNK_HOME, SPLUNK_DB, license_role, auth_method</param>
+
+          <module name="HTML">
+            <param name="html"><![CDATA[
+
+
+            ]]></param>
+             </module>
+
+        </module>
+      </module>
+    </module>
+  </module>
+
+
+  <module name="HTML" layoutPanel="panel_row2_col1">
+   <param name="html"><![CDATA[
+
+    <div>
+        <div class="home" style="float:left">
+        <h2>T&C is your app!</h2>
+	<p>We heard you! TnC has been built in response to the needs and requests of Splunk users. Let us know what you want in the next version!</p>
+        <p>To request features, provide feedback, or report issues, send email to <b><a href="mailto:tnc@splunk.com">tnc@splunk.com</a></b>.</p>
+
+	<p>TnC has been developed primarily by the Splunk Support team, with the help of Splunk Dev, Splunk Docs, and <b><a href="http://sideviewapps.com" class="spl-icon-external-link-xsm" target="_blank">Sideview LLC</a></b>.</p>
+        </div>
+        <div style="float:right">
+        <a href="http://www.lta.gov.sg"><img src="/static/app/TrafficnCarpark/bigappIcon.png" alt="T&C"/></a>
+        </div>
+    </div>
+   ]]></param>   
+  </module>
+  
+   <module name="HTML" layoutPanel="panel_row3_col1">
+    <param name="html"><![CDATA[
+
+<!-- seems slightly clearer to embed this CSS here -->
+<!-- this makes this whole panel invisible on page load -->
+<style type="text/css">
+  div.panel_row3_col {
+    display:none;
+  }
+</style>
+      <div id="bumpDiv" class="home">
+      <h2>Bump the version of your Splunk Web cache</h2>
+      <p>
+      Click the Bump Version button whenever you upgrade either the <i>Splunk on Splunk</i> app or the <i>Sideview Utils</i> app.
+      </p>
+      <p>
+      Versions of Splunk prior to Splunk 4.2.3 require you to manually update your Splunk Web static resource cache when you update an app. This affects the cache resources for CSS and JavaScript.
+      </p>
+      <p>
+      The counter to the Bump Version button simply tracks how often you have performed this operation. 
+      </p>
+      <iframe src="/en-US/_bump" style="border:0px;width:200px;height:75px;overflow:hidden;"></iframe>
+      <p>
+      <strong>Note: </strong>Update to Splunk 4.2.3 to avoid having to manually clear the Splunk Web cache.
+      </p>
+
+      </div>
+    ]]></param>
+    <param name="customBehavior">onlyShowForOlderVersions</param>
+  </module>
+ 
+  
+  
+
+
+</view>

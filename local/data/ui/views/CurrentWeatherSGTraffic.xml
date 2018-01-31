@@ -1,0 +1,108 @@
+<form script="dropdown_panels.js" stylesheet="dropdown_panels.css">
+  <label>Weather and Traffic Analysis</label>
+  <fieldset autoRun="true" submitButton="false">
+    <input type="dropdown" token="development" searchWhenChanged="true">
+      <label>Select an Expressway:</label>
+	   <default>AYE</default>
+      <choice value="AYE">AYE</choice>
+      <populatingSearch fieldForValue="development" fieldForLabel="development">
+        <![CDATA[sourcetype="ltaTraffic" Type="Accident" tag=expressway | stats count by Location | rename Location as development]]>
+      </populatingSearch>
+    </input>
+  </fieldset>
+  <row grouping="1">
+    <chart id="chart1">
+      <title>Correlation of Accidents and Rain</title>
+      <searchString>sourcetype="ltaTraffic"  Type="Accident" Location="$development$" earliest=-7d latest=now | transaction locationaccident maxspan=1s  | bucket span=1h _time | dedup locationaccident| fields onexpressway, locationaccident, current_area | join current_area type=outer earlier=false usetime=true  [search sourcetype="CurrentWeatherSGMap" earliest=-7d latest=now | bucket span=1h _time | rename Message as current_area | fields current_area current_summary] | timechart span=1d count(locationaccident) as Accidents, count(eval(current_summary="Rain" OR current_summary="Thundery Showers" OR current_summary="Showers" OR current_summary="Passing Showers" OR current_summary="Heavy Thundery Showers"  OR current_summary="Thundery Showers With Gusty Winds")) as Rain  by onexpressway</searchString>
+      <earliestTime>$earliest$</earliestTime>
+      <latestTime>$latest$</latestTime>
+      <option name="height">360px</option>
+      <option name="charting.axisTitleX.visibility">visible</option>
+      <option name="charting.axisTitleY.visibility">visible</option>
+      <option name="charting.axisX.scale">linear</option>
+      <option name="charting.axisY.scale">linear</option>
+      <option name="charting.chart">column</option>
+      <option name="charting.chart.nullValueMode">gaps</option>
+      <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+      <option name="charting.chart.stackMode">default</option>
+      <option name="charting.chart.style">shiny</option>
+      <option name="charting.drilldown">all</option>
+      <option name="charting.layout.splitSeries">0</option>
+      <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+      <option name="charting.legend.placement">right</option>
+    </chart>
+    <chart>
+      <title>Correlation of Heavy Traffic and Rain</title>
+      <searchString>sourcetype="ltaTraffic"  Type="Heavy Traffic" Location="$development$" earliest=-7d latest=now | transaction locationaccident maxspan=1s  | bucket span=1h _time | dedup locationaccident| fields onexpressway, locationaccident, current_area | join current_area type=outer earlier=false usetime=true  [search sourcetype="CurrentWeatherSGMap" earliest=-7d latest=now | bucket span=1h _time | rename Message as current_area | fields current_area current_summary] | timechart span=1d count(locationaccident) as HeavyTraffic, count(eval(current_summary="Rain" OR current_summary="Thundery Showers" OR current_summary="Showers" OR current_summary="Passing Showers" OR current_summary="Heavy Thundery Showers"  OR current_summary="Thundery Showers With Gusty Winds")) as Rain by onexpressway</searchString>
+      <earliestTime>$earliest$</earliestTime>
+      <latestTime>$latest$</latestTime>
+      <option name="height">360px</option>
+    </chart>
+  </row>
+  <row grouping="2">
+    <html>
+      <h1>Overall Correlation of Accidents and Rain</h1>This chart shows the relationship between Accidents on all Expressways when Raining over 1 Week.</html>
+    <chart>
+      <searchString>sourcetype="ltaTraffic"  Type="Accident" tag=expressway  earliest=-7d latest=now | transaction locationaccident maxspan=1s  | bucket span=1h _time | dedup locationaccident| fields onexpressway, locationaccident, current_area | join current_area type=outer earlier=false usetime=true  [search sourcetype="CurrentWeatherSGMap" earliest=-7d latest=now | bucket span=1h _time  | rename Message as current_area | fields current_area current_summary] | timechart span=1d count(locationaccident) as Accidents, count(eval(current_summary="Rain" OR current_summary="Thundery Showers" OR current_summary="Showers" OR current_summary="Passing Showers" OR current_summary="Heavy Thundery Showers" OR current_summary="Thundery Showers With Gusty Winds")) as Rain</searchString>
+    </chart>
+  </row>
+  <row grouping="2">
+    <html>
+      <h1>Overall Correlation of Heavy Traffic and Rain</h1>This chart shows the relationship between Heavy Traffic when Raining over 1 week.</html>
+    <chart>
+      <searchString>sourcetype="ltaTraffic"  Type="Heavy Traffic" tag=expressway  earliest=-7d latest=now | transaction locationaccident maxspan=1s  | bucket span=1h _time | dedup locationaccident| fields onexpressway, locationaccident, current_area | join current_area type=outer earlier=false usetime=true  [search sourcetype="CurrentWeatherSGMap" earliest=-7d latest=now | bucket span=1h _time  | rename Message as current_area | fields current_area current_summary] | timechart span=1d count(locationaccident) as HeavyTraffic, count(eval(current_summary="Rain" OR current_summary="Thundery Showers" OR current_summary="Showers" OR current_summary="Passing Showers" OR current_summary="Heavy Thundery Showers"  OR current_summary="Thundery Showers With Gusty Winds")) as Rain</searchString>
+    </chart>
+  </row>
+  <row grouping="2">
+    <html>
+      <h2>Accidents when Raining over Expressway</h2>
+      <h3>This chart shows the relationship between Accidents when Raining by Expressway over 1 Month</h3>
+    <div id="sunburstsearch"
+                 class="splunk-manager"
+                 data-require="splunkjs/mvc/searchmanager"
+                 data-options='{
+                    "search": "sourcetype="ltaTraffic" Type="Accident" tag=expressway | transaction locationaccident maxspan=20s  | bucket span=1h _time | dedup locationaccident| fields onexpressway, locationaccident, current_area | join current_area type=outer earlier=false usetime=true  [search sourcetype="CurrentWeatherSGMap" current_summary="Rain" OR current_summary="Thundery Showers" OR current_summary="Showers" OR current_summary="Passing Showers" OR current_summary="Heavy Thundery Showers" | bucket span=1h _time | rename Message as current_area | fields current_area current_summary] | stats count AS values by onexpressway current_summary | sort - values | stats list(current_summary) AS categories list(values) AS data BY onexpressway | eval categories=mvindex(categories, 0, 10) | eval data=mvindex(data, 0, 10) | rename onexpressway AS name",
+                    "earliest_time": "-30d",
+					"latest_time": "now",
+                    "status_buckets": 0,
+                    "cancelOnUnload": true,
+                    "auto_cancel": 90,
+                    "preview": true
+                 }'>
+            </div>
+            <div id="sunburst-chart"
+                 class="splunk-view"
+     			 data-require="app/mysginfoV3/components/sunburst"
+                 data-options='{
+                    "managerid": "sunburst-search",
+                    "height": 450
+                 }'>
+            </div>
+    </html>
+  </row>
+  <row grouping="2">
+    <html>
+      <h1>Heavy Traffic when Raining over Expressway</h1>This chart shows the relationship between Heavy Traffic when Raining by Expressway over 1 Month.</html>
+    <chart>
+      <searchString>sourcetype="ltaTraffic" Type="Heavy Traffic" tag=expressway  earliest=-30d latest=now | transaction locationaccident maxspan=20s  | bucket span=1h _time | dedup locationaccident| fields onexpressway, locationaccident, current_area | join current_area type=outer earlier=false usetime=true  [search sourcetype="CurrentWeatherSGMap" current_summary="Rain" OR current_summary="Thundery Showers" OR current_summary="Showers" OR current_summary="Passing Showers" OR current_summary="Heavy Thundery Showers"  OR current_summary="Thundery Showers With Gusty Winds" earliest=-30d latest=now | bucket span=1h _time | rename Message as current_area | fields current_area current_summary] | stats count AS values by onexpressway current_summary | sort - values | stats list(current_summary) AS categories list(values) AS data BY onexpressway | eval categories=mvindex(categories, 0, 10) | eval data=mvindex(data, 0, 10) | rename onexpressway AS name</searchString>
+      <option name="charting.chart">pie</option>
+      <option name="charting.drilldown">all</option>
+    </chart>
+  </row>
+  <row grouping="2">
+    <html>
+      <h1>Number of Accidents happening over 24hour</h1>This chart shows the number of Accidents happened over 24 hour (1 Month)</html>
+    <chart>
+      <searchString>sourcetype="ltaTraffic"  Type="Accident" tag=expressway  earliest=-30d latest=now | transaction locationaccident maxspan=1s  | bucket span=1h _time| dedup locationaccident| fields onexpressway, locationaccident, current_area | eval date_hour=strftime(_time, "%H:%M") | stats count(locationaccident) as Accidents by date_hour</searchString>
+    </chart>
+  </row>
+  <row grouping="2">
+    <html>
+      <h1>Accidents on Expressway near Areas</h1>This pie chart shows the Accidents hapened at Expressways on which Areas that the most number of Accidents over 1 Month.</html>
+    <chart>
+      <searchString>sourcetype="ltaTraffic"  Type="Accident" tag=expressway  earliest=-30d latest=now | transaction locationaccident maxspan=1s  | bucket span=1h _time | dedup locationaccident| fields onexpressway, locationaccident, current_area | join current_area type=outer earlier=false usetime=true  [search sourcetype="CurrentWeatherSGMap" earliest=-30d | bucket span=1h _time  | rename Message as current_area | fields current_area current_summary] | chart count(locationaccident) as Accidents by current_area</searchString>
+      <option name="charting.chart">pie</option>
+      <option name="charting.drilldown">all</option>
+    </chart>
+  </row>
+</form>

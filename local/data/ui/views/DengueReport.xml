@@ -1,0 +1,27 @@
+<form>
+  <label>Dengue cases report</label>
+  <fieldset autoRun="true" submitButton="false">
+    <input type="dropdown" token="location" searchWhenChanged="true">
+      <label>Select a location :</label>
+      <default>*</default>
+	    <choice value="*">All</choice>
+		<populatingSearch fieldForValue="location" fieldForLabel="location">
+			<![CDATA[sourcetype="NEADengue" | stats count by location]]>
+		</populatingSearch>
+    </input>
+    <input type="time" searchWhenChanged="true">
+      <label>Select a time range for the report :</label>
+      <default/>
+    </input>
+  </fieldset>
+  <row>
+    <chart>
+      <title>Dengue cases in detail</title>
+      <searchString>sourcetype="NEADengue" $location$| integratedanalysis chained| chart max(Number of cases) by DESCRIPTION</searchString>
+      <option name="charting.chart">pie</option>
+      <option name="height">360px</option>
+      <option name="width">100%</option>
+      <option name="charting.drilldown">all</option>
+    </chart>
+  </row>
+</form>

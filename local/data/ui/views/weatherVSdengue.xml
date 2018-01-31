@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='utf-8'?>
+<dashboard>
+  <label>WeatherVSdengue</label>
+
+  
+  <row grouping="2">
+    <html>
+        <h1>Finding the relationships between Haze and Dengue in 6 different area</h1>
+      <p>
+        This chart shows the relationship between the dengue case over 6 different location of north,south,east,west and central of Singapore and 24-hour PSI value reading.
+      </p>
+    </html>
+    <chart>
+      <searchString>
+        sourcetype="CurrentWeatherSG" | timechart span=1d mean(current_psi) as mean_psi | join _time [search sourcetype="json_onemap" | bin span=1d _time | search (location="Tampines" OR location="Yishun" OR location="Choa Chu Kang" OR location="Jurong West" OR location="Kallang" OR location="Queenstown") | stats max(cases) as maxPerDescription by _time description location | timechart span=1d sum(maxPerDescription) by location useother=f usenull=f]
+      </searchString>
+      <title>Dengue vs PSI over 6 geographical location around Singapore</title>
+      <option name="charting.axisLabelsY.placement">left</option>
+      <option name="charting.axisLabelsY2">#axisLabelsY</option>
+      <option name="charting.axisLabelsY2.axis">@axisY2</option>
+      <option name="charting.axisLabelsY2.placement">right</option>
+      <option name="charting.axisTitleY.text">24h PSI reading</option>
+      <option name="charting.axisTitleY2">axisTitle</option>
+      <option name="charting.axisTitleY2.text">Dengue cases</option>
+      <option name="charting.axisY2">#axisY</option>
+      <option name="charting.chart">area</option>
+      <option name="charting.chart.columnAlignment">.5</option>
+      <option name="charting.chart.columnBrushPalette">@transparentBrushPalette</option>
+      <option name="charting.chart.columnSpacing">20</option>
+      <option name="charting.chart.data">@data1</option>
+      <option name="charting.chart.nullValueMode">connect</option>
+      <option name="charting.chart.stackMode">none</option>
+      <option name="charting.chart.useAbsoluteSpacing">True</option>
+      <option name="charting.chart2">line</option>
+      <option name="charting.chart2.axisY">@axisY2</option>
+      <option name="charting.chart2.data">@data2</option>
+      <option name="charting.chart2.nullValueMode">connect</option>
+      <option name="charting.data1">view</option>
+      <option name="charting.data1.columns">[0,1]</option>
+      <option name="charting.data1.table">@data</option>
+      <option name="charting.data2">view</option>
+      <option name="charting.data2.columns">[0,2,3,4,5,6,7]</option>
+      <option name="charting.data2.table">@data</option>
+      <option name="charting.layout.axisLabels">[@axisLabelsX,@axisLabelsY,@axisLabelsY2]</option>
+      <option name="charting.layout.axisTitles">[@axisTitleX,@axisTitleY,@axisTitleY2]</option>
+      <option name="charting.layout.charts">[@chart,@chart2]</option>
+      <option name="charting.transparentBrushPalette">solidFill</option>
+      <option name="charting.transparentBrushPalette.alpha">0.7</option>
+      <option name="charting.transparentBrushPalette.colorPalette">@colorPalette</option>
+      <option name="charting.legend.labels">[mean_psi,Tampines,Yishun,Choa Chu Kang,Jurong West,Kallang,Queenstown]</option>
+      <option name="charting.seriesColors">[0x9966FF,0x00CCFF,0x00FF00,0xCC0066,0xCC6600,0xCCFF00,0x9933FF]</option>
+    </chart>
+    </row>
+    <row grouping="2">
+    <html>
+        <h1>Finding the relationships between Haze and Dengue</h1>
+      <p>
+        This chart shows the relationship between the cumulated dengue case for a month and the 24-hour PSI value reading.
+        It seems that with the PSI reading shooting up to unhealthy range, the number of dengue cases are seems to be on a continuous upwards trend. 
+      </p>
+    </html>
+    <chart>
+      <searchString>
+      	sourcetype="CurrentWeatherSG" | timechart span=1d mean(current_psi) as mean_psi | join _time [search sourcetype="json_onemap" | bin _time span=1d | stats max(cases) as maxPerDescription by _time description | timechart span=1d sum(maxPerDescription) as total_dengue_cases]
+      </searchString>
+      <title>Cumulative dengue cases vs PSI</title>
+      <option name="charting.axisLabelsY.placement">left</option>
+      <option name="charting.axisLabelsY2">#axisLabelsY</option>
+      <option name="charting.axisLabelsY2.axis">@axisY2</option>
+      <option name="charting.axisLabelsY2.placement">right</option>
+      <option name="charting.axisTitleY.text">24h PSI reading</option>
+      <option name="charting.axisTitleY2">axisTitle</option>
+      <option name="charting.axisTitleY2.text">Dengue cases</option>
+      <option name="charting.axisY2">#axisY</option>
+      <option name="charting.chart">area</option>
+      <option name="charting.chart.columnAlignment">.5</option>
+      <option name="charting.chart.columnBrushPalette">@transparentBrushPalette</option>
+      <option name="charting.chart.columnSpacing">20</option>
+      <option name="charting.chart.data">@data1</option>
+      <option name="charting.chart.nullValueMode">connect</option>
+      <option name="charting.chart.useAbsoluteSpacing">True</option>
+      <option name="charting.chart2">line</option>
+      <option name="charting.chart2.axisY">@axisY2</option>
+      <option name="charting.chart2.data">@data2</option>
+      <option name="charting.chart2.nullValueMode">connect</option>
+      <option name="charting.data1">view</option>
+      <option name="charting.data1.columns">[0,1]</option>
+      <option name="charting.data1.table">@data</option>
+      <option name="charting.data2">view</option>
+      <option name="charting.data2.columns">[0,2]</option>
+      <option name="charting.data2.table">@data</option>
+      <option name="charting.layout.axisLabels">[@axisLabelsX,@axisLabelsY,@axisLabelsY2]</option>
+      <option name="charting.layout.axisTitles">[@axisTitleX,@axisTitleY,@axisTitleY2]</option>
+      <option name="charting.layout.charts">[@chart,@chart2]</option>
+      <option name="charting.transparentBrushPalette">solidFill</option>
+      <option name="charting.transparentBrushPalette.alpha">0.7</option>
+      <option name="charting.transparentBrushPalette.colorPalette">@colorPalette</option>
+      <option name="charting.legend.labels">[mean_psi,total_dengue_cases]</option>
+      <option name="charting.seriesColors">[0x000000,0x9966FF]</option>
+    </chart>
+  </row>
+</dashboard>

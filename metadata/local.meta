@@ -1,0 +1,301 @@
+[default]
+
+[]
+export = system
+access = read : [ * ], write : [ admin, power ]
+modtime = 1366876060.021205300
+version = 5.0.2
+
+[app/launcher]
+modtime = 1368520760.952823500
+version = 5.0.2
+
+[app/package/check_for_updates]
+modtime = 1368520760.961823500
+version = 5.0.2
+
+[app/ui]
+modtime = 1368520760.940823500
+version = 5.0.2
+
+[inputs/lta%3A%2F%2Ffatintest]
+owner = admin
+modtime = 1366955641.468176800
+version = 5.0.2
+
+[inputs/ltaCarpark%3A%2F%2FcarparkTest]
+owner = admin
+modtime = 1367217781.854390600
+version = 5.0.2
+
+[inputs/ltaTraffic%3A%2F%2FtrafficTest]
+owner = admin
+modtime = 1368169653.722140200
+version = 5.0.2
+
+[inputs/script%3A%2F%2F.%5Cbin%5CdosPopulation.py]
+modtime = 1386657108.253656300
+version = 6.0
+
+[nav/default]
+modtime = 1384511236.873584800
+version = 5.0.4
+
+[props/CurrentWeatherSG/EXTRACT-PSIValue]
+export = system
+owner = admin
+modtime = 1381716241.420500500
+version = 5.0.4
+
+[props/ltaTraffic/EXTRACT-CreateDate]
+export = system
+access = read : [ * ], write : [ admin, power ]
+modtime = 1368767452.561948000
+version = 5.0.2
+owner = admin
+
+[props/ltaTraffic/EXTRACT-CreateTime]
+export = system
+access = read : [ * ], write : [ admin, power ]
+modtime = 1368973462.857746900
+version = 5.0.2
+owner = admin
+
+[props/ltaTraffic/EXTRACT-Location]
+export = system
+access = read : [ * ], write : [ admin, power ]
+modtime = 1368767121.494012000
+version = 5.0.2
+owner = admin
+
+[props/ltaTraffic/EXTRACT-Message]
+export = system
+access = read : [ * ], write : [ admin, power ]
+modtime = 1368154148.279160100
+version = 5.0.2
+owner = admin
+
+[savedsearches/AreaAvailability]
+export = system
+access = read : [ * ]
+modtime = 1367816092.489785200
+version = 5.0.2
+owner = admin
+
+[savedsearches/AreaOnly]
+modtime = 1383705843.015712900
+version = 5.0.4
+
+[savedsearches/DengueCasesToday]
+export = system
+owner = admin
+modtime = 1372654890.740642600
+version = 5.0.2
+
+[savedsearches/DengueClusterFigure]
+modtime = 1372654651.529723900
+version = 5.0.2
+
+[savedsearches/DengueOverPopulation]
+owner = admin
+modtime = 1373504826.140117000
+version = 5.0.2
+
+[savedsearches/TopDengueCases]
+modtime = 1372654611.821753500
+version = 5.0.2
+
+[savedsearches/TopFiveDengue]
+modtime = 1372654566.091180900
+version = 5.0.2
+
+[savedsearches/Type_Of_Incidents]
+export = system
+access = read : [ * ], write : [ admin, power ]
+modtime = 1383705834.057817200
+version = 5.0.4
+owner = admin
+
+[views/3gDummy]
+export = system
+access = read : [ * ]
+modtime = 1368425113.674562100
+version = 5.0.2
+owner = admin
+
+[views/CurrentWeatherSG]
+modtime = 1389249511.504054700
+version = 6.0.1
+
+[views/CurrentWeatherSGMap]
+modtime = 1389231972.274227200
+version = 6.0.1
+
+[views/CurrentWeatherSGTraffic]
+modtime = 1389256293.768232100
+version = 6.0.1
+
+[views/DengueCasesTrend]
+modtime = 1375114954.200190200
+version = 5.0.2
+
+[views/DengueMaps]
+modtime = 1389261918.148632700
+version = 6.0.1
+
+[views/DengueReport]
+modtime = 1388734726.010233400
+version = 6.0.1
+
+[views/DengueStatistics]
+modtime = 1388628993.107596300
+version = 6.0.1
+
+[views/DengueVSpopulation]
+modtime = 1389259764.266247200
+version = 6.0.1
+
+[views/HomeWifiDummy]
+export = system
+access = read : [ * ]
+modtime = 1368425238.579173800
+version = 5.0.2
+owner = admin
+
+[views/Homepage]
+export = system
+access = read : [ * ], write : [ * ]
+modtime = 1368694536.220853100
+version = 5.0.2
+owner = admin
+
+[views/IntroDummy]
+export = system
+access = read : [ * ]
+modtime = 1368425244.029372400
+version = 5.0.2
+owner = admin
+
+[views/LocationOfActiveClusters]
+modtime = 1374564242.403122500
+version = 5.0.2
+
+[views/MainPage]
+export = system
+access = read : [ * ]
+modtime = 1368424740.535130800
+version = 5.0.2
+owner = admin
+
+[views/Maps]
+modtime = 1389236755.727552900
+version = 6.0.1
+
+[views/Population]
+modtime = 1375160468.538985700
+version = 5.0.2
+
+[views/PopulationStatistics]
+modtime = 1389255202.001066300
+version = 6.0.1
+
+[views/RadioDummy]
+export = system
+access = read : [ * ]
+modtime = 1368425250.494151200
+version = 5.0.2
+owner = admin
+
+[views/Test]
+modtime = 1376806915.134998400
+version = 5.0.3
+
+[views/TrafficIncidentMap]
+export = system
+access = read : [ * ], write : [ admin, power ]
+modtime = 1389240266.739591900
+version = 6.0.1
+owner = admin
+
+[views/TrafficIncidents]
+modtime = 1389253363.956280200
+version = 6.0.1
+
+[views/TvDummy]
+export = system
+access = read : [ * ]
+modtime = 1368425260.437966700
+version = 5.0.2
+owner = admin
+
+[views/WeatherDummy]
+export = system
+access = read : [ * ]
+modtime = 1368425270.599274700
+version = 5.0.2
+owner = admin
+
+[views/carpark_lots_advanced]
+modtime = 1368697008.202980000
+version = 5.0.2
+
+[views/d3]
+modtime = 1374556386.253207000
+version = 5.0.2
+
+[views/flashtimeline]
+export = system
+access = read : [ * ], write : [ admin, power ]
+modtime = 1367818333.367210900
+version = 5.0.2
+owner = admin
+
+[views/ltaconvert]
+export = system
+access = read : [ * ], write : [ admin, power ]
+modtime = 1389249174.205328200
+version = 6.0.1
+owner = nobody
+
+[views/psi]
+owner = admin
+modtime = 1383635257.974013900
+version = 5.0.4
+
+[views/trial]
+export = system
+access = read : [ * ], write : [ * ]
+modtime = 1366945934.115116300
+version = 5.0.2
+owner = admin
+
+[views/tryForm]
+modtime = 1369191082.618844900
+version = 5.0.2
+
+[views/weatherVSdengue]
+modtime = 1376926855.191177200
+version = 5.0.2
+
+[viewstates/%2A%3Aetcxuq32]
+export = system
+owner = nobody
+modtime = 1383705842.966708000
+version = 5.0.4
+
+[viewstates/%2A%3Atvcahme8]
+export = system
+owner = nobody
+modtime = 1383705834.006812100
+version = 5.0.4
+
+[viewstates/flashtimeline%3Ahnmsluxu]
+export = system
+owner = nobody
+modtime = 1383635088.483066500
+version = 5.0.4
+
+[views/tryForm2]
+version = 6.0.1
+modtime = 1389247161.798093500
+

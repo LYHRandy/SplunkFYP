@@ -1,0 +1,61 @@
+<form script="timerange_panels.js" stylesheet="timerange_panels.css">
+  <label>Traffic Incidents</label>>
+    <fieldset autoRun="true" submitButton="false">
+		<input type="time" token="time1" searchWhenChanged="true">
+			<default>Last 24 hours</default>
+		</input>
+  </fieldset>
+  <row grouping="1">
+    <chart>
+      <title>Total traffic incident occured By Type</title>
+      <searchString>sourcetype="ltaTraffic" | dedup Message | top limit=10000 Type | rename Type AS Type_of_Incident | rename count as Total_Occurrence</searchString>
+      <earliestTime>-24h@h</earliestTime>
+      <latestTime>now</latestTime>
+      <option name="charting.axisTitleX.visibility">visible</option>
+      <option name="charting.axisTitleY.visibility">visible</option>
+      <option name="charting.axisX.scale">linear</option>
+      <option name="charting.axisY.scale">linear</option>
+      <option name="charting.chart">bar</option>
+      <option name="charting.chart.nullValueMode">gaps</option>
+      <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+      <option name="charting.chart.stackMode">default</option>
+      <option name="charting.chart.style">shiny</option>
+      <option name="charting.drilldown">none</option>
+      <option name="charting.layout.splitSeries">0</option>
+      <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+      <option name="charting.legend.placement">right</option>
+    </chart>
+    <chart>
+      <title>Total traffic incident occured By location over the last 24hours</title>
+      <searchString>sourcetype="ltaTraffic" Type="Accident"  | dedup Message | stats count(Type) as Total_incident by Location | where Total_incident&gt;3 | sort -Total_incident</searchString>
+      <earliestTime>-24h@h</earliestTime>
+      <latestTime>now</latestTime>
+      <option name="charting.chart">pie</option>
+      <option name="charting.axisTitleX.visibility">visible</option>
+      <option name="charting.axisTitleY.visibility">visible</option>
+      <option name="charting.axisX.scale">linear</option>
+      <option name="charting.axisY.scale">linear</option>
+      <option name="charting.chart.nullValueMode">gaps</option>
+      <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+      <option name="charting.chart.stackMode">default</option>
+      <option name="charting.chart.style">shiny</option>
+      <option name="charting.drilldown">all</option>
+      <option name="charting.layout.splitSeries">0</option>
+      <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+      <option name="charting.legend.placement">right</option>
+    </chart>
+  </row>
+  <row>
+    <table id="table1">
+      <title>Total duration for each traffic incident</title>
+      <searchString>sourcetype="ltaTraffic" | transaction Message |chart min(_time) AS Earliest, max(_time) AS Latest, avg(duration) As Duration By Message | eval Latest=Latest+Duration | eval Duration=round(Duration/3600,2) | rename Message As Traffic_incident_description | eval Earliest=strftime(Earliest,"%+")|eval Latest=strftime(Latest,"%+")| sort - Duration</searchString>
+      <earliestTime>$time1.earliest$</earliestTime>
+      <latestTime>$time1.latest$</latestTime>
+      <option name="wrap">true</option>
+      <option name="rowNumbers">false</option>
+      <option name="dataOverlayMode">heatmap</option>
+      <option name="drilldown">row</option>
+      <option name="count">10</option>
+    </table>
+  </row>
+</form>

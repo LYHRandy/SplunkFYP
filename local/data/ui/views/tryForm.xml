@@ -1,0 +1,123 @@
+<view autoCancelInterval="90" isVisible="true" objectMode="SimpleForm" onunloadCancelJobs="true" template="dashboard.html">
+  <label>Lots Enquiry</label>
+  <module name="AccountBar" layoutPanel="appHeader"/>
+  <module name="AppBar" layoutPanel="navigationHeader"/>
+  <module name="Message" layoutPanel="messaging">
+    <param name="maxSize">1</param>
+    <param name="filter">*</param>
+    <param name="clearOnJobDispatch">False</param>
+  </module>
+  <module name="Message" layoutPanel="messaging">
+    <param name="maxSize">1</param>
+    <param name="filter">splunk.search.job</param>
+    <param name="clearOnJobDispatch">True</param>
+  </module>
+ 
+  <module name="SearchSelectLister" layoutPanel="viewHeader">
+      
+    <param name="searchFieldsToDisplay">
+      <list>
+        <param name="value">development</param>
+       <param name="label">development</param>
+          
+          
+        <fieldset>
+           <input type="text" token="action">
+               <default>*</default>
+            </input>
+        </fieldset>
+ 
+      </list>
+      
+    </param>
+    <param name="search">sourcetype="ltaCarpark" action="$action$"| head 26 | stats count by action | rename action as development
+       </param>
+    <param name="selected"></param>
+    <param name="settingToCreate">development_setting</param>
+    <param name="staticFieldsToDisplay"/>
+    <param name="label">Select a building and click the search button</param>
+    <param name="searchWhenChanged">False</param>
+    <module name="ConvertToIntention">
+      <param name="settingToConvert">development_setting</param>
+      <param name="intention">
+        <param name="arg">
+          <param name="development">
+            <param name="value">$target$</param>
+            <param name="fillOnEmpty">True</param>
+            <param name="default"></param>
+          </param>
+        </param>
+        <param name="name">stringreplace</param>
+      </param>
+      <module name="TimeRangePicker">
+        <param name="selected">All Time</param>
+        <param name="searchWhenChanged">False</param>
+        <module name="SubmitButton">
+          <param name="label">Search</param>
+          <param name="allowSoftSubmit">True</param>
+          <param name="visible">True</param>
+          <param name="updatePermalink">True</param>
+          <module name="HiddenSearch" layoutPanel="panel_row1_col1" group="Lots Available Now" autoRun="False">
+            <param name="search">sourcetype="ltaCarpark" earliest=-72h@h latest=now Locations="$development$" | head 1 | stats sum(Lots) as total | rangemap field=total severe=0-30 elevated=31-60 default=low</param>
+            <param name="groupLabel">Lots Available Now</param>
+            <module name="ViewstateAdapter">
+              <param name="suppressionList">
+                <item>classField</item>
+                <item>afterLabel</item>
+                <item>field</item>
+              </param>
+              <module name="HiddenFieldPicker">
+                <param name="strictMode">True</param>
+                <module name="JobProgressIndicator">
+                  <module name="SingleValue">
+                    <param name="classField">range</param>
+                    <param name="afterLabel"> Lots Available</param> 
+                    <param name="field">total</param>
+                    <module name="Gimp"/>
+                  </module>
+                </module>
+              </module>
+            </module>
+          </module>
+          <module name="HiddenSearch" layoutPanel="panel_row2_col1" group="Car Park Lot Availability Timeline" autoRun="False">
+                  <param name="search">sourcetype="ltaCarpark" Locations="$development$" | timechart span=3d max(Lots) AS Lots by Locations  usenull=f</param>
+            <param name="groupLabel">Car Park Lot Availability Timeline</param>
+            <module name="ViewstateAdapter">
+              <param name="suppressionList">
+                <item>charting.axisTitleX.text</item>
+                <item>charting.chart</item>
+                <item>charting.axisTitleY.text</item>
+              </param>
+              <module name="HiddenFieldPicker">
+                <param name="strictMode">True</param>
+                <module name="JobProgressIndicator">
+                  <module name="EnablePreview">
+                    <param name="display">False</param>
+                    <param name="enable">True</param>
+                    <module name="HiddenChartFormatter">
+                      <param name="charting.axisTitleX.text">Date/Time</param>
+                      <param name="charting.chart">line</param>
+                      <param name="charting.axisTitleY.text">No of Lots</param>
+                      <module name="JSChart">
+                        <param name="width">100%</param>
+                        <module name="Gimp"/>
+                        <module name="ConvertToDrilldownSearch">
+                          <module name="ViewRedirector">
+                            <param name="viewTarget">flashtimeline</param>
+                          </module>
+                        </module>
+                      </module>
+                      <module name="ViewRedirectorLink">
+                        <param name="viewTarget">flashtimeline</param>
+                      </module>
+                    </module>
+                  </module>
+                </module>
+              </module>
+            </module>
+          </module>
+        </module>
+      </module>
+    </module>
+  </module>
+</view>

@@ -1,0 +1,45 @@
+<nav>
+    <view name="MainPage" default="true"/>
+		<collection label="Transport">
+			<view name="Homepage" default="true"/>
+			<collection label="Carpark Lots Availability">
+				<a href="/manager/mysginfov3/data/inputs/ltaCarpark">Inputs Configurations</a>
+				<view name="tryForm2"/>
+				<view name="ltaconvert"/> 
+				<view name="Maps"/>
+			</collection>
+			<collection label="Traffic Information"> 
+				<a href="/manager/mysginfov3/data/inputs/ltaTraffic">Inputs Configurations</a>
+				<view name="TrafficIncidents"/>
+				<view name="TrafficIncidentMap"/>
+			</collection>
+		</collection>
+		<collection label="Weather">
+			<view name="CurrentWeatherSG" default="true"/>
+			
+			<view name="CurrentWeatherSGMap" default="true"/>
+		</collection>
+		<collection label="Dengue Cluster">
+			<view name="DengueMaps"/>
+			<view name="DengueStatistics"/>
+			
+			<view name="DengueReport" default="true"/>
+		</collection>
+		
+		<collection label="Population Query">
+
+			<view name="PopulationStatistics" default="true"/>
+
+		</collection>
+		
+		<collection label="Correlation">
+
+			<view name="weatherVSdengue" default="true"/>
+			
+			<view name="DengueVSpopulation" default="true"/>
+			
+			<view name="CurrentWeatherSGTraffic" default="true"/>
+
+		</collection>
+	
+</nav>

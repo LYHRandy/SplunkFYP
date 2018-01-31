@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?><dashboard>
+  <label>DengueVSpopulation</label>
+  <row grouping="2">
+             <html>
+      <h1>Relationship between Dengue cases over Population</h1>
+      <p>This chart shows the number of dengue cases and the population in different location in Singapore</p>
+    </html>
+    <chart>
+      <searchString>sourcetype=json_onemap | stats max(cases) as max by description location | stats sum(max) as dengue_cases by location | join location [search sourcetype="population_onemap" | rename Area as location | table location totalPopulation] | search NOT (location=Rochor OR location=Newton OR location="Downtown Core" OR location=Queenstown OR location="Marine Parade" OR location=Novena OR location="Jurong East")</searchString>
+      <earliestTime>$earliest$</earliestTime>
+      <latestTime>$latest$</latestTime>
+      <option name="charting.axisLabelsY.placement">left</option>
+      <option name="charting.axisLabelsY2">#axisLabelsY</option>
+      <option name="charting.axisLabelsY2.axis">@axisY2</option>
+      <option name="charting.axisLabelsY2.placement">right</option>
+      <option name="charting.axisTitleY.text">Population</option>
+      <option name="charting.axisTitleY2">axisTitle</option>
+      <option name="charting.axisTitleY2.text">Dengue cases</option>
+      <option name="charting.axisY2">#axisY</option>
+      <option name="charting.axisY2.maximumNumber">2500</option>
+      <option name="charting.axisY2.minimumNumber">0</option>
+      <option name="charting.chart">bar</option>
+      <option name="charting.chart.columnAlignment">.5</option>
+      <option name="charting.chart.columnBrushPalette">@transparentBrushPalette</option>
+      <option name="charting.chart.columnSpacing">40</option>
+      <option name="charting.chart.data">@data1</option>
+      <option name="charting.chart.useAbsoluteSpacing">True</option>
+      <option name="charting.chart2">column</option>
+      <option name="charting.chart2.axisY">@axisY2</option>
+      <option name="charting.chart2.columnAlignment">.10</option>
+      <option name="charting.chart2.columnSpacing">1.6</option>
+      <option name="charting.chart2.data">@data2</option>
+      <option name="charting.data1">view</option>
+      <option name="charting.data1.columns">[0,2]</option>
+      <option name="charting.data1.table">@data</option>
+      <option name="charting.data2">view</option>
+      <option name="charting.data2.columns">[0,1]</option>
+      <option name="charting.data2.table">@data</option>
+      <option name="charting.layout.axisLabels">[@axisLabelsX,@axisLabelsY,@axisLabelsY2]</option>
+      <option name="charting.layout.axisTitles">[@axisTitleX,@axisTitleY,@axisTitleY2]</option>
+      <option name="charting.layout.charts">[@chart,@chart2]</option>
+      <option name="charting.legend.labels">[totalPopulation,dengue_cases]</option>
+      <option name="charting.seriesColors">[0x00FF00,0x003399]</option>
+      <option name="charting.transparentBrushPalette">solidFill</option>
+      <option name="charting.transparentBrushPalette.alpha">0.7</option>
+      <option name="charting.transparentBrushPalette.colorPalette">@colorPalette</option>
+      <option name="charting.legend.placement">bottom</option>
+      <option name="height">400px</option>
+      <option name="charting.axisTitleX.visibility">visible</option>
+      <option name="charting.axisTitleY.visibility">visible</option>
+      <option name="charting.axisX.scale">linear</option>
+      <option name="charting.axisY.scale">linear</option>
+      <option name="charting.chart.nullValueMode">gaps</option>
+      <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+      <option name="charting.chart.stackMode">stacked</option>
+      <option name="charting.chart.style">shiny</option>
+      <option name="charting.drilldown">all</option>
+      <option name="charting.layout.splitSeries">0</option>
+      <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+    </chart>
+  
+  </row>
+  <row grouping="2">
+    <html>
+      <h1>Percentage of dengue infection in Singapore</h1>
+      <p>This chart shows the percentage of dengue cases over population to find the percentage of dengue infection in different location</p>
+    </html>
+    <chart>
+      <searchString>sourcetype="json_onemap" | stats max(cases) as max by description location | stats sum(max) as dengue_cases by location | join location [search sourcetype="population_onemap" | rename Area as location | table location totalPopulation] | eval percentage_of_dengue_infection=(dengue_cases/totalPopulation)*100 | search NOT (location=Rochor OR location=Newton OR location="Downtown Core" OR location=Queenstown OR location="Marine Parade" OR location=Novena OR location="Jurong East")</searchString>
+      <earliestTime>$earliest$</earliestTime>
+      <latestTime>$latest$</latestTime>
+      <option name="charting.axisLabelsY.placement">left</option>
+      <option name="charting.axisLabelsY2">#axisLabelsY</option>
+      <option name="charting.axisLabelsY2.axis">@axisY2</option>
+      <option name="charting.axisLabelsY2.placement">right</option>
+      <option name="charting.axisTitleY.text">Population</option>
+      <option name="charting.axisTitleY2">axisTitle</option>
+      <option name="charting.axisTitleY2.text">Percentage of dengue infection</option>
+      <option name="charting.axisY2">#axisY</option>
+      <option name="charting.axisY2.maximumNumber">2</option>
+      <option name="charting.axisY2.minimumNumber">0</option>
+      <option name="charting.chart">bar</option>
+      <option name="charting.chart.columnAlignment">.5</option>
+      <option name="charting.chart.columnBrushPalette">@transparentBrushPalette</option>
+      <option name="charting.chart.columnSpacing">40</option>
+      <option name="charting.chart.data">@data1</option>
+      <option name="charting.chart.useAbsoluteSpacing">True</option>
+      <option name="charting.chart2">column</option>
+      <option name="charting.chart2.axisY">@axisY2</option>
+      <option name="charting.chart2.columnAlignment">.10</option>
+      <option name="charting.chart2.columnSpacing">1.2</option>
+      <option name="charting.chart2.data">@data2</option>
+      <option name="charting.data1">view</option>
+      <option name="charting.data1.columns">[0,3]</option>
+      <option name="charting.data1.table">@data</option>
+      <option name="charting.data2">view</option>
+      <option name="charting.data2.columns">[0,2]</option>
+      <option name="charting.data2.table">@data</option>
+      <option name="charting.layout.axisLabels">[@axisLabelsX,@axisLabelsY,@axisLabelsY2]</option>
+      <option name="charting.layout.axisTitles">[@axisTitleX,@axisTitleY,@axisTitleY2]</option>
+      <option name="charting.layout.charts">[@chart,@chart2]</option>
+      <option name="charting.legend.labels">[totalPopulation,percentage_of_dengue_infection]</option>
+      <option name="charting.seriesColors">[0xFF0000,0x00FF00,0x003399,0x003399]</option>
+      <option name="charting.transparentBrushPalette">solidFill</option>
+      <option name="charting.transparentBrushPalette.alpha">0.7</option>
+      <option name="charting.transparentBrushPalette.colorPalette">@colorPalette</option>
+      <option name="charting.legend.placement">bottom</option>
+      <option name="height">400px</option>
+      <option name="charting.axisTitleX.visibility">visible</option>
+      <option name="charting.axisTitleY.visibility">visible</option>
+      <option name="charting.axisX.scale">linear</option>
+      <option name="charting.axisY.scale">linear</option>
+      <option name="charting.chart.nullValueMode">gaps</option>
+      <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+      <option name="charting.chart.stackMode">stacked</option>
+      <option name="charting.chart.style">shiny</option>
+      <option name="charting.drilldown">all</option>
+      <option name="charting.layout.splitSeries">0</option>
+      <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+    </chart>
+  </row>
+  <row>
+    <chart>
+      <searchString>sourcetype="json_onemap" | stats max(cases) as max by description location | chart sum(max) as dengue_cases by location</searchString>
+      <title>Dengue Cases Overview</title>
+      <option name="charting.chart">pie</option>
+      <option name="charting.chart.sliceCollapsingThreshold">0</option>
+    </chart>
+    <chart>
+      <searchString>sourcetype="json_onemap" | stats max(cases) as max by description location | stats sum(max) as dengue_cases by location | join location [search sourcetype="population_onemap" | rename Area as location | table location totalPopulation] | eval percentage_of_dengue_infection=(dengue_cases/totalPopulation)*100 | search NOT (location=Rochor OR location=Newton OR location="Downtown Core" OR location=Queenstown OR location="Marine Parade" OR location=Novena OR location="Jurong East") | chart max(percentage_of_dengue_infection) by location</searchString>
+      <title>Percentage of dengue infection</title>
+      <option name="charting.chart">pie</option>
+      <option name="charting.chart.sliceCollapsingThreshold">0</option>
+    </chart>
+  </row>
+</dashboard>

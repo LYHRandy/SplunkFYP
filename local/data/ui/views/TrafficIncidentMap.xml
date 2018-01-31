@@ -1,0 +1,28 @@
+<dashboard>
+<label>Traffic Incident Map</label>
+<row>
+<map>
+<searchString>sourcetype="ltaTraffic" | geostats latfield=Latitude longfield=Longitude count by Type</searchString>
+<earliestTime>-3hr</earliestTime>
+<latestTime>now</latestTime>
+<option name="height">600px</option>
+      <option name="mapping.tileLayer.url">http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png</option>
+      <option name="mapping.tileLayer.subdomains">[a,b,c]</option>
+      <option name="mapping.tileLayer.minZoom">0</option>
+      <option name="mapping.tileLayer.maxZoom">18</option>
+      <option name="mapping.tileLayer.attribution">Map data (c) 2012 OpenStreetMap contributors, CC-BY-SA.</option>
+      <option name="mapping.map.fitBounds">(1.5084,103.7178,1.2108,104.0371)</option>
+      <option name="mapping.data.maxClusters">500</option>
+      <option name="mapping.markerLayer.markerMaxSize">20</option>   
+</map>
+</row>
+<row>
+<table>
+<searchString>sourcetype="ltaTraffic" | dedup Message| table Message, Location | Rename Message As Traffic_Incident_Description</searchString>
+  <option name="wrap">true</option>
+<option name="rowNumbers">true</option>
+<option name="drilldown">row</option>
+<option name="count">10</option>
+  </table>
+</row>
+</dashboard>

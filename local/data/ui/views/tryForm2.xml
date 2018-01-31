@@ -1,0 +1,60 @@
+<form>
+  <label>Lots Enquiry</label>
+  <fieldset autoRun="true" submitButton="false">
+    <input type="dropdown" token="development" searchWhenChanged="true">
+      <label>Select a building and click the search button</label>
+      <default>Concorde Hotel</default>
+      <choice value="Concorde Hotel">Concorde Hotel</choice>
+      <populatingSearch fieldForValue="development" fieldForLabel="development">
+        <![CDATA[sourcetype="ltaCarpark" | head 26 | stats count by Locations | Rename Locations as development]]>
+      </populatingSearch>
+    </input>
+    <input type="time" searchWhenChanged="true">
+      <default/>
+    </input>
+  </fieldset>
+  <row>
+    <single>
+      <title>Lots Available Now</title>
+      <searchString>sourcetype="ltaCarpark" earliest=-72h@h latest=now Locations="$development$" | head 1 | stats sum(Lots) as total | rangemap field=total severe=0-30 elevated=31-60 default=low</searchString>
+      <earliestTime>$earliest$</earliestTime>
+      <latestTime>$latest$</latestTime>
+      <option name="charting.axisTitleX.visibility">visible</option>
+      <option name="charting.axisTitleY.visibility">visible</option>
+      <option name="charting.axisX.scale">linear</option>
+      <option name="charting.axisY.scale">linear</option>
+      <option name="charting.chart">bar</option>
+      <option name="charting.chart.nullValueMode">gaps</option>
+      <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+      <option name="charting.chart.stackMode">default</option>
+      <option name="charting.chart.style">shiny</option>
+      <option name="charting.drilldown">all</option>
+      <option name="charting.layout.splitSeries">0</option>
+      <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+      <option name="charting.legend.placement">right</option>
+      <option name="height">100px</option>
+      <option name="afterLabel">Lots Available</option>
+    </single>
+  </row>
+  <row>
+    <chart>
+      <title>Car Park Lot Availability Timeline</title>
+      <searchString>sourcetype="ltaCarpark" Locations="$development$" | timechart span=3d max(Lots) AS Lots by Locations  usenull=f</searchString>
+      <earliestTime>$earliest$</earliestTime>
+      <latestTime>$latest$</latestTime>
+      <option name="charting.axisTitleX.visibility">visible</option>
+      <option name="charting.axisTitleY.visibility">visible</option>
+      <option name="charting.axisX.scale">linear</option>
+      <option name="charting.axisY.scale">linear</option>
+      <option name="charting.chart">line</option>
+      <option name="charting.chart.nullValueMode">gaps</option>
+      <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+      <option name="charting.chart.stackMode">default</option>
+      <option name="charting.chart.style">shiny</option>
+      <option name="charting.drilldown">all</option>
+      <option name="charting.layout.splitSeries">0</option>
+      <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+      <option name="charting.legend.placement">right</option>
+    </chart>
+  </row>
+</form>

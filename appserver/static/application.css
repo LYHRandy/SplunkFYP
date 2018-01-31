@@ -1,0 +1,175 @@
+.appHeaderWrapper 
+{
+
+background-image: url(uppergradient.png);
+}
+
+a, .EventsViewer .default .showinline 
+{
+    color:#99d3d5;
+}
+
+.viewHeader
+{
+color:white;
+
+}
+.SimpleResultsTable
+{
+background-color:white;
+}
+.appHeaderWrapper 
+{
+color: white;
+}
+
+.appLogo 
+{
+height: 43px; 
+width: 535px;
+background-image: url(newapp.png);
+background-repeat: no-repeat;
+}
+	
+.font
+{
+color:white;
+}
+
+.appHeaderWrapper h1
+{
+display: none;
+/*color: #FF0033;
+font-size:200%*/
+}
+
+/* default page color */
+body, .splBackground-default, 
+.graphArea,  
+.reportSecondPanel, .reportThirdPanel, 
+.sidebarCollapsed,
+.SearchBar .saTypeaheadWrapper,
+.ui-datepicker-links,
+.popupContent,
+.SearchBar .assistantContainer 
+{
+    background-color:black;
+	color:white;
+}
+.resultsArea
+{
+background-color:000000;
+color:black;
+
+}
+/* primary background - applies to search controls and primary action panels */
+.viewHeader, .mainSearchControls, .splSearchControls-inline,
+.SearchBar .saHelpWrapper,
+.popupContent  
+{
+    background-color: black;
+}
+
+/* secondary background - sidebar, other panels */
+.splBackground-secondary, .sidebarExpanded,
+.fieldValuePopup p.reportLinks,
+.fieldValuePopup div.reportLinks 
+{
+    background-color: black;
+}
+.TimeRangePicker .timeRangeActivatorWrapper 
+{
+    background-color: black;
+}
+
+/* Specific overrides */
+.layoutCellInner .ResultsHeader .splHeader, .layoutCellInner .ResultsHeader .splHeader-secondary 
+{
+    background: transparent none;
+}
+
+/* Specific overrides */
+.popupFooter 
+{
+    background-color: #363430;
+}
+
+#loading 
+{
+    background-color: transparent;
+	color: #5e1f1f;
+}
+
+a, .EventsViewer .default  
+{
+    color:#36F;
+	#c65252;
+}
+
+/* dashboard background color */
+body.splTemplate-dashboard 
+{
+    background-color: black; 
+}
+
+/* dashboard containers */
+.dashboardCell 
+{
+    background-color: black; 
+    background-image:none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    _background-image: none;   /* for IE6 */
+	#background-image: url(backgrounddiv.png);
+}
+
+.appBarNav
+{
+background-repeat: no-repeat;
+background-image: url(newlogo.png);
+background-position:center; 
+text-align:center;
+}
+
+ul.appBarNav
+{
+padding-top:4cm;
+}
+
+ul.appBarNav li.hasMenu a:hover, ul.appBarNav li a:hover 
+{
+    color: red;
+    background-color: black ;
+    background-image: none;
+    background-repeat: repeat-x;
+    _background-image: none;  
+}
+
+
+ul.appBarNav li a.menuOpen 
+{
+    /*color: red ;*/
+    /*background-color: black ;*/
+    background-image: none;
+    background-repeat: repeat-x;
+    _background-image: none;  
+}
+
+h2
+ {
+background-color:993333;
+color: #FF0033;
+font-size:150%
+ }
+ 
+div.panel_row3_col
+ {
+    display:none;
+}
+
+.home
+{
+text-align:justify;
+color:white;
+}
+  

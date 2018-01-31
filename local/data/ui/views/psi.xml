@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<dashboard>
+  <label>PSI</label>
+  <row>
+    <chart>
+      <searchName>PSI</searchName>
+      <title>PSI</title>
+      <option name="charting.chart">bar</option>
+    </chart>
+  </row>
+</dashboard>
